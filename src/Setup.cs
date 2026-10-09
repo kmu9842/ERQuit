@@ -6,7 +6,8 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 [assembly: AssemblyTitle("ERQuit Setup")]
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
 
 namespace ERQuitSetup
 {
@@ -36,29 +37,32 @@ namespace ERQuitSetup
             this.preview = preview;
             Text = "ERQuit 설치";
             Font = new Font("맑은 고딕", 10F);
-            ClientSize = new Size(650, 425);
+            ClientSize = new Size(650, 465);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             StartPosition = FormStartPosition.CenterScreen;
             Controls.Add(new Label { Text = "이터널 리턴과 함께 시작하는 ERQuit", Location = new Point(26, 25),
                 Size = new Size(600, 40), Font = new Font(Font.FontFamily, 17F, FontStyle.Bold) });
+            Controls.Add(new Label { Text = "게임 창에서 Alt + F4를 누르면 이터널 리턴을 강제 종료합니다.",
+                Location = new Point(28, 80), Size = new Size(594, 32),
+                Font = new Font(Font.FontFamily, 11F, FontStyle.Bold), ForeColor = Color.FromArgb(30, 90, 150) });
             Controls.Add(new Label { Text = "관리자 권한 없이 현재 사용자에게 설치합니다.\n게임 설치 폴더는 각 PC의 Steam 설정에서 자동으로 찾습니다.",
-                Location = new Point(28, 80), Size = new Size(590, 55) });
-            Controls.Add(new TextBox { ReadOnly = true, Text = directory, Location = new Point(29, 142), Size = new Size(590, 28) });
-            install = new Button { Text = "설치", Location = new Point(29, 184), Size = new Size(180, 42) };
+                Location = new Point(28, 120), Size = new Size(590, 55) });
+            Controls.Add(new TextBox { ReadOnly = true, Text = directory, Location = new Point(29, 182), Size = new Size(590, 28) });
+            install = new Button { Text = "설치", Location = new Point(29, 224), Size = new Size(180, 42) };
             install.Click += Install;
             Controls.Add(install);
-            status = new Label { Text = "설치 후 Steam 실행 옵션을 한 번 설정하면 됩니다.", Location = new Point(228, 185), Size = new Size(390, 48) };
+            status = new Label { Text = "설치 후 Steam 실행 옵션을 한 번 설정하면 됩니다.", Location = new Point(228, 225), Size = new Size(390, 48) };
             Controls.Add(status);
-            Controls.Add(new Label { Text = "Steam → 이터널 리턴 → 속성 → 일반 → 실행 옵션", Location = new Point(28, 251), Size = new Size(590, 26) });
+            Controls.Add(new Label { Text = "Steam → 이터널 리턴 → 속성 → 일반 → 실행 옵션", Location = new Point(28, 291), Size = new Size(590, 26) });
             option = new TextBox { ReadOnly = true, Text = "\"" + Path.Combine(directory, "ERQuit.exe") + "\" --steam %command%",
-                Location = new Point(29, 282), Size = new Size(480, 28) };
+                Location = new Point(29, 322), Size = new Size(480, 28) };
             Controls.Add(option);
-            copy = new Button { Text = "복사", Location = new Point(521, 277), Size = new Size(98, 38), Enabled = false };
+            copy = new Button { Text = "복사", Location = new Point(521, 317), Size = new Size(98, 38), Enabled = false };
             copy.Click += delegate { Clipboard.SetText(option.Text); status.Text = "복사했습니다. Steam의 실행 옵션에 붙여 넣으세요."; };
             Controls.Add(copy);
             Controls.Add(new Label { Text = "설정 후에는 Steam에서 평소처럼 게임을 실행하세요.\n지금 켜진 게임에는 시작 메뉴의 ERQuit을 실행해 연결할 수 있습니다.\n기존 실행 옵션이 있다면 %command% 뒤에 유지하세요.",
-                Location = new Point(28, 337), Size = new Size(593, 75) });
+                Location = new Point(28, 377), Size = new Size(593, 75) });
         }
 
         protected override bool ShowWithoutActivation { get { return preview; } }
